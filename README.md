@@ -4,8 +4,8 @@ This C++ project is a small synthesizer that utilizes the command line interface
 
 ## Features within source code
 
-- **Real-time Synthesis**: Experience real-time audio synthesis with keyboard input.
-- **Multiple Waveforms**: Choose from various waveforms, including sine, square, triangle, and sawtooth.
+- **Real-time Synthesis**: real-time audio synthesis with keyboard input.
+- **Multiple Waveforms**: various waveforms, including sine, square, triangle, and sawtooth.
 - **Adjustable Parameters**
 - **Command Line Interface**
 
