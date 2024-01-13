@@ -1,4 +1,4 @@
-# C++ Synthesizer
+# Synthesizer
 
 This C++ project is a small synthesizer that utilizes the command line interface and keyboard input. It allows you to play musical notes and experiment with different sounds using your computer keyboard.
 
