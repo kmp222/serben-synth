@@ -2,6 +2,16 @@
 #include <atomic>
 #include "olcNoiseMaker.h"
 
+// TODO
+// 1) organizzare in file diversi
+// 2) sistemare transient click
+// 3) amplitude check x safety
+// 4) cambio osc a runtime
+// 6) sequencer
+// 7) GUI
+// 8) dist effect
+
+
 struct envelopeADSR {
 
     double attack_time;
@@ -18,11 +28,11 @@ struct envelopeADSR {
 
     envelopeADSR() {
         
-        attack_time = 10;
-        decay_time = 1;
-        release_time = 0.02;
+        attack_time = 0.10;
+        decay_time = 0.01;
+        release_time = 0.20;
         start_amplitude = 1.0;
-        sustain_amplitude = 0.3;
+        sustain_amplitude = 0.8;
         trigger_on_time = 0.0;
         trigger_off_time = 0.0;
         note_is_on = false;
@@ -38,7 +48,7 @@ struct envelopeADSR {
             
             // attack
             if (lifetime <= attack_time) {
-                amplitude = ( lifetime / attack_time) * start_amplitude;
+                amplitude = (lifetime / attack_time) * start_amplitude;
             }
 
             // decay
@@ -123,7 +133,7 @@ double osc(double hertz, double time, int type) {
             {
                 double output = 0.0;
                 
-                for (double i = 1.0; i < 70.0; ++i) {
+                for (double i = 1.0; i < 50.0; ++i) {
                     output += ( sin(i * w(hertz) * time)) / i;
                 }
 
@@ -147,9 +157,9 @@ double osc(double hertz, double time, int type) {
 // ritorna ampiezza (tra -1 e 1) in funzione del tempo
 double make_noise(double time) {
 
-    double output = envelope.get_amplitude(time) * osc(frequency, time, 1);
+    double output = envelope.get_amplitude(time) * osc(frequency, time, 3);
 
-    return output; // lower volume
+    return output;
 
 }
 
@@ -157,7 +167,6 @@ int main() {
 
     // get all sound hw
     vector<wstring> devices = olcNoiseMaker<short>::Enumerate();
-
 
     // display
     for (auto d: devices) wcout << "Found Output Device: " << d << endl;
@@ -170,22 +179,35 @@ int main() {
 
     print_keyboard();
 
+    bool key_pressed = false;
+    int current_key = -1;
     while (true) {
 
-        bool key_pressed = false;
+        key_pressed = false;
 
         for (int i = 0; i < 13; ++i) {
+
             if ( GetAsyncKeyState( (unsigned char)("ZSXCFVGBNJMK\xbc")[i] ) && 0x8000 ) {
                 
-                frequency = octave_base_freq * pow(d12th_root_of_2, i);
-                envelope.note_on(sound.GetTime());
+                if (current_key != i) {
+                    frequency = octave_base_freq * pow(d12th_root_of_2, i);
+                    envelope.note_on(sound.GetTime());
+                    current_key = i;
+                }
+                
                 key_pressed = true;
 
             }
+
         }
 
         if (!key_pressed) {
-            envelope.note_off(sound.GetTime());
+
+            if (current_key != -1) {
+                envelope.note_off(sound.GetTime());
+                current_key = -1;
+            }
+            
         }
 
     }
