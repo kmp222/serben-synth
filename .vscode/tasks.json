@@ -3,11 +3,11 @@
 	"tasks": [
 		{
 			"type": "cppbuild",
-			"label": "C/C++: g++.exe build active file",
+			"label": "C/C++: g++.exe build active file (Release)",
 			"command": "C:\\msys64\\ucrt64\\bin\\g++.exe",
 			"args": [
 				"-fdiagnostics-color=always",
-				"-g",
+				"-O3",
 				"${fileDirname}\\*.cpp",
 				"-o",
 				"${fileDirname}\\${fileBasenameNoExtension}.exe",
