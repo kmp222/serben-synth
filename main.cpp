@@ -13,6 +13,8 @@
 // 9) extend keyboard
 // 10) MIDI input
 // 11) sistemare suono al lancio
+// 12) fix readme
+// 13) pt3 18:00 - , pt4
 
 struct envelopeADSR {
 
