@@ -2,20 +2,6 @@
 #include <atomic>
 #include "olcNoiseMaker.h"
 
-// TODO
-// 1) organizzare in file diversi
-// 2) sistemare transient click
-// 3) amplitude check x safety
-// 4) cambio osc a runtime
-// 6) sequencer
-// 7) GUI
-// 8) dist effect
-// 9) extend keyboard
-// 10) MIDI input
-// 11) sistemare suono al lancio
-// 12) fix readme
-// 13) pt3 18:00 - , pt4
-
 struct envelopeADSR {
 
     double attack_time;
@@ -46,10 +32,13 @@ struct envelopeADSR {
     double get_amplitude(double time) {
 
         double amplitude = 0.0;
-        double lifetime = time - trigger_on_time;
+        double lifetime = 0.0;
+        double release_amplitude = 0.0;
 
         if (note_is_on) {
             
+            lifetime = time - trigger_on_time;
+
             // attack
             if (lifetime <= attack_time) {
                 amplitude = (lifetime / attack_time) * start_amplitude;
@@ -68,13 +57,24 @@ struct envelopeADSR {
 
         } else {
 
+            lifetime = trigger_off_time - time;
+
             // release
+            if (lifetime <= attack_time)
+                release_amplitude = (lifetime / attack_time) * start_amplitude;
+
+            if (lifetime > attack_time && lifetime <= (attack_time + decay_time))
+                release_amplitude = ((lifetime - attack_time) / decay_time) * (sustain_amplitude - start_amplitude) + start_amplitude;
+
+            if (lifetime > (attack_time + decay_time))
+                release_amplitude = sustain_amplitude;
+            
             amplitude = ((time - trigger_off_time) / release_time) *
-                (0.0 - sustain_amplitude) + sustain_amplitude;
+                (0.0 - release_amplitude) + release_amplitude;
 
         }
 
-        if (amplitude <= 0.0001) {
+        if (amplitude <= 0.0) {
             amplitude = 0.0;
         }
 
@@ -101,7 +101,7 @@ struct envelopeADSR {
 const double master_volume = 1.0;
 std::atomic<double> frequency(0.0);
 double octave_base_freq = 220; // A3
-double d12th_root_of_2 = pow(2.0, 1.0 / 12.0);
+double twelfth_root_of_two = pow(2.0, 1.0 / 12.0);
 
 void print_keyboard() {
 
@@ -169,6 +169,32 @@ struct instrument {
 
 };
 
+struct simpleSine : public instrument {
+
+    simpleSine() {
+        volume = 0.5;
+        env.attack_time = 0.0;
+        env.decay_time = 0.0;
+        env.start_amplitude = 1.0;
+        env.sustain_amplitude = 1.0;
+        env.release_time = 0.0;
+    }
+
+    double sound(double time, double frequency) {
+
+        double s = env.get_amplitude(time) * 
+            (
+
+            + 1.0 * osc (frequency, time, 0)
+    
+            );
+
+        return s * volume;
+
+    }
+
+};
+
 struct bell : public instrument {
 
     bell() {
@@ -194,7 +220,6 @@ struct bell : public instrument {
         return s * volume;
 
     }
-
 
 };
 
@@ -224,7 +249,6 @@ struct harmonica : public instrument {
 
     }
 
-
 };
 
 instrument *voice = nullptr;
@@ -248,7 +272,7 @@ int main() {
     // create sound machine
     olcNoiseMaker<short> sound(devices[0], 44100, 1, 8, 512);
 
-    voice = new harmonica();
+    voice = new bell();
 
     // link noise function with sound machine
     sound.SetUserFunction(make_noise);
@@ -257,6 +281,7 @@ int main() {
 
     bool key_pressed = false;
     int current_key = -1;
+
     while (true) {
 
         key_pressed = false;
@@ -266,7 +291,7 @@ int main() {
             if ( (GetAsyncKeyState( (unsigned char)("ZSXCFVGBNJMK\xbc")[i] ) & 0x8000) != 0 ) {
                 
                 if (current_key != i) {
-                    frequency = octave_base_freq * pow(d12th_root_of_2, i);
+                    frequency = octave_base_freq * pow(twelfth_root_of_two, i);
                     voice->env.note_on(sound.GetTime());
                     current_key = i;
                 }
@@ -282,12 +307,14 @@ int main() {
             if (current_key != -1) {
                 voice->env.note_off(sound.GetTime());
                 current_key = -1;
+                frequency = 0.0;
             }
             
         }
 
     }
 
+    
     delete voice;
     voice = nullptr;
 

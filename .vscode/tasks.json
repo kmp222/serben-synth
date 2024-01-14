@@ -24,7 +24,15 @@
 				"kind": "build",
 				"isDefault": true
 			},
-			"detail": "compiler: C:\\msys64\\ucrt64\\bin\\g++.exe"
+			"detail": "compiler: C:\\msys64\\ucrt64\\bin\\g++.exe",
+			"presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
 		}
 	]
 }
