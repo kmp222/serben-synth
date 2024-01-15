@@ -21,3 +21,4 @@ public/private
 path compilatore univoco
 prendere suoni da video tut
 ripulire tutto codice
+gnu gpl 3 license?
