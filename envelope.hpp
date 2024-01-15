@@ -9,12 +9,14 @@ struct envelopeADSR {
     double start_amplitude;
     double sustain_amplitude;
 
-    double trigger_on_time;
-    double trigger_off_time;
+    double trigger_on_time = 0.0;
+    double trigger_off_time = 0.0;
 
-    bool note_is_on;
+    bool note_is_on = false;
 
     envelopeADSR();
+
+    envelopeADSR(double att, double dec, double rel, double start, double sus);
 
     double get_amplitude(double time);
 

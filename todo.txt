@@ -1,18 +1,14 @@
 sistemare transient click
 amplitude check x safety
-cambio osc a runtime
 sequencer
-GUI
+GUI parametri a runtime
 dist effect
 extend keyboard
 MIDI input
 sistemare suono al lancio
 fix readme
-stereo
-detuned voices
 refactor
 transiz pulita
-polifonia
 while crash dopo un po'
 release mode
 tastiera type runtime
@@ -21,5 +17,7 @@ makefile
 distruttori/costruttori structs, gestione memoria
 directories
 commenti
-aggiungere suoni
 public/private
+path compilatore univoco
+prendere suoni da video tut
+ripulire tutto codice

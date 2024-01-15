@@ -3,15 +3,27 @@
 
 #define M_PI 3.14159265358979323846
 
-double w(double hertz) {
-    return hertz * 2.0 * M_PI;
+Osc::Osc() {
+
+    wave = SINE;
+    lfo_hertz = 0;
+    lfo_amplitude = 0;
+
 }
 
-double osc(double hertz, double time, int type, double lfo_hertz, double lfo_amplitude) {
+Osc::Osc(Waves w, double lfo_h, double lfo_a) {
 
-    double freq = w(hertz) * time + lfo_amplitude * hertz * sin(w(lfo_hertz) * time);
+    wave = w;
+    lfo_hertz = lfo_h;
+    lfo_amplitude = lfo_a;
 
-    switch(type) {
+}
+
+double Osc::sound(double time, double frequency) {
+
+    double freq = w(frequency) * time + lfo_amplitude * frequency * sin(w(lfo_hertz) * time);
+
+    switch(wave) {
 
         case SINE:
             return sin(freq);
@@ -34,7 +46,7 @@ double osc(double hertz, double time, int type, double lfo_hertz, double lfo_amp
             }
         
         case DIGITAL_SAW:
-            return (hertz * M_PI * fmod(time, 1.0 / hertz)) * (2.0 / M_PI) - (M_PI / 2.0);
+            return (frequency * M_PI * fmod(time, 1.0 / frequency)) * (2.0 / M_PI) - (M_PI / 2.0);
 
         case NOISE:
             return 2.0 * ((double) rand() / (double) RAND_MAX) - 1.0;

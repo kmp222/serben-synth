@@ -1,27 +1,24 @@
 #include <iostream>
+#include <cmath>
 #include "olcNoiseMaker.h"
 #include "synth.hpp"
+#include "utils.hpp"
+#include "preset.hpp"
 
-Synth s;
+const double BASE_FREQUENCY = 220.0;
+const double TRANSPOSE = pow(2.0, 1.0 / 12.0);
 
-void print_keyboard() {
+Preset myPreset("sine", 0.0, 0.0, 0.0, 1.0, 1.0,
+                   Waves::SINE, 1.0, 0.0, 0.0,
+                   Waves::SINE, 0.0, 0.0, 0.0,
+                   Waves::SINE, 0.0, 0.0, 0.0);
 
-std::cout << "________________________________" << std::endl;
-std::cout << "|  | |  |  | | | |  |  | | | |  |" << std::endl;
-std::cout << "|  | |  |  | | | |  |  | | | |  |" << std::endl;
-std::cout << "|  |S|  |  |F| |G|  |  |J| |K|  |" << std::endl;
-std::cout << "|  |_|  |  |_| |_|  |  |_| |_|  |" << std::endl;
-std::cout << "|   |   |   |   |   |   |   |   |" << std::endl;
-std::cout << "| Z | X | C | V | B | N | M | , |" << std::endl;
-std::cout << "|___|___|___|___|___|___|___|___|" << std::endl;
-
-}
+Synth s(myPreset);
 
 // ritorna ampiezza (tra -1 e 1) in funzione del tempo
     static double make_noise(double time) {
 
-        double output = s.voice->sound(time, s.frequency);
-        return output * s.master_volume;
+        return s.master_sound(time);
 
     }
 
@@ -53,8 +50,8 @@ int main() {
             if ( (GetAsyncKeyState( (unsigned char)("ZSXCFVGBNJMK\xbc")[i] ) & 0x8000) != 0 ) {
                 
                 if (current_key != i) {
-                    s.frequency = s.octave_base_freq * pow(s.twelfth_root_of_two, i);
-                    s.voice->env.note_on(sound.GetTime());
+                    s.frequency = BASE_FREQUENCY * pow(TRANSPOSE, i);
+                    s.env.note_on(sound.GetTime());
                     current_key = i;
                 }
                 
@@ -67,7 +64,7 @@ int main() {
         if (!key_pressed) {
 
             if (current_key != -1) {
-                s.voice->env.note_off(sound.GetTime());
+                s.env.note_off(sound.GetTime());
                 current_key = -1;
                 s.frequency = 0.0;
             }
@@ -75,9 +72,6 @@ int main() {
         }
 
     }
-    
-    delete s.voice;
-    s.voice = nullptr;
 
     return 0;
     

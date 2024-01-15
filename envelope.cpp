@@ -5,11 +5,15 @@ envelopeADSR::envelopeADSR() :
     decay_time(1.0),
     release_time(0.3),
     start_amplitude(0.0),
-    sustain_amplitude(1.0),
-    trigger_on_time(0.0),
-    trigger_off_time(0.0),
-    note_is_on(false)
+    sustain_amplitude(1.0)
 {}
+
+envelopeADSR::envelopeADSR(double att, double dec, double rel, double start, double sus)
+    : attack_time(att),
+      decay_time(dec),
+      release_time(rel),
+      start_amplitude(start),
+      sustain_amplitude(sus) {}
 
 double envelopeADSR::get_amplitude(double time) {
 
