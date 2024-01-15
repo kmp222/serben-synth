@@ -1,0 +1,53 @@
+struct simpleSine : public instrument {
+
+    simpleSine() {
+        volume = 0.5;
+        env.attack_time = 0.0;
+        env.decay_time = 0.0;
+        env.start_amplitude = 1.0;
+        env.sustain_amplitude = 1.0;
+        env.release_time = 0.0;
+    }
+
+    double sound(double time, double frequency) {
+
+        double s = env.get_amplitude(time) * 
+            (
+
+            + 1.0 * osc(frequency, time, 0)
+    
+            );
+
+        return s * volume;
+
+    }
+
+};
+
+struct harmonica : public instrument {
+
+    harmonica() {
+        volume = 0.1;
+        env.attack_time = 0.05;
+        env.decay_time = 1.0;
+        env.start_amplitude = 1.0;
+        env.sustain_amplitude = 0.95;
+        env.release_time = 2;
+    }
+
+    double sound(double time, double frequency) {
+
+        double s = env.get_amplitude(time) * 
+            (
+
+            + 1.0 * osc(frequency, time, 1, 5.0, 0.001)
+            + 0.5 * osc(frequency * 2.0, time, 1)
+            + 0.05 * osc(frequency * 3.0, time, 5)
+    
+            );
+
+        return s * volume;
+
+    }
+
+};

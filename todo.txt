@@ -1,4 +1,3 @@
-organizzare in file diversi
 sistemare transient click
 amplitude check x safety
 cambio osc a runtime
@@ -18,3 +17,7 @@ while crash dopo un po'
 release mode
 tastiera type runtime
 proper exe
+makefile
+distruttori/costruttori structs, gestione memoria
+directories
+commenti
