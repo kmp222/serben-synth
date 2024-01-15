@@ -1,24 +1,36 @@
-sistemare transient click
-amplitude check x safety
-sequencer
-GUI parametri a runtime
-dist effect
-extend keyboard
-MIDI input
-sistemare suono al lancio
+// SOUND DESIGN
+polifonia (javidx tut)
+unison/stereo
+sequencer (javidx tut)
+distorsion
+add presets (javidx tut)
+
+// BUGS
+fix transient click
+fix startup sound (long release)
+clean notes transition
+freeze after 2 mins
+fix pressed keys showing on cmd when quitting
+
+// CODE
+amplitude check (safety)
 fix readme
 refactor
-transiz pulita
-while crash dopo un po'
 release mode
-tastiera type runtime
-proper exe
+standalone exe
 makefile
-distruttori/costruttori structs, gestione memoria
-directories
-commenti
-public/private
-path compilatore univoco
-prendere suoni da video tut
-ripulire tutto codice
-gnu gpl 3 license?
+organize in diff dirs
+comment funcs
+set private/public elements + getters and setters
+compiler absolute/relative path
+gnu gpl 3 license
+
+// GUI
+menu
+presets list
+set preset/oscillators params
+
+// FUNC
+extend keyboard
+MIDI input
+import presets
