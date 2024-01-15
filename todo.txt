@@ -22,3 +22,4 @@ distruttori/costruttori structs, gestione memoria
 directories
 commenti
 aggiungere suoni
+public/private
