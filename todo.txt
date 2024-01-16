@@ -10,13 +10,10 @@ delay
 fix transient click
 fix startup sound (long release)
 clean notes transition
-freeze after 2 mins
-fix pressed keys showing on cmd when quitting
 
 // CODE
 amplitude check (safety)
 fix readme
-release mode
 standalone exe
 makefile
 organize in diff dirs
@@ -26,7 +23,7 @@ compiler absolute/relative path
 gnu gpl 3 license
 rule of 4 (constructors ecc...)
 load preset function in synth
-exit condition in while(true)
+exit condition in while(true) // thread join
 
 // GUI
 menu
