@@ -19,3 +19,4 @@ double w(double hertz);
 
 // custom simple GUI
 void print_keyboard();
+void print_info();

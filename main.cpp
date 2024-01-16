@@ -25,14 +25,19 @@ int main() {
     // link synth sound to the sound machine
     sound.SetUserFunction([](double time) { return s.master_sound(time); });
 
+    print_info();
+
     print_keyboard();
 
     // track key pressing
     bool key_pressed = false;
     int current_key = -1;
 
+    // exit condition
+    bool exit = false;
+
     // listen and wait for keyboard events
-    while (true) {
+    while (!exit) {
 
         key_pressed = false;
         
@@ -52,8 +57,7 @@ int main() {
                 // if the note hasn't changed, we don't need to set the frequency again
                 key_pressed = true;
 
-            }
-
+            } 
         }
 
         // note released
@@ -65,6 +69,11 @@ int main() {
                 s.frequency = 0.0;
             }
             
+        }
+
+        // pressing 0 will terminate the program
+        if (GetAsyncKeyState(0x30)) {
+            exit = true;
         }
 
     }

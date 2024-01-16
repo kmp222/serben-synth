@@ -18,3 +18,7 @@ std::cout << "| Z | X | C | V | B | N | M | , |" << std::endl;
 std::cout << "|___|___|___|___|___|___|___|___|" << std::endl;
 
 }
+
+void print_info() {
+    std::cout << "press 0 to terminate the program" << std::endl;
+}

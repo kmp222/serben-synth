@@ -6,7 +6,7 @@ distorsion
 add presets (javidx tut)
 delay
 
-// BUGS
+// SOUND BUGS
 fix transient click
 fix startup sound (long release)
 clean notes transition
@@ -14,16 +14,15 @@ clean notes transition
 // CODE
 amplitude check (safety)
 fix readme
-standalone exe
+standalone exe won't open
 makefile
 organize in diff dirs
-comment funcs
 set private/public elements + getters and setters
 compiler absolute/relative path
 gnu gpl 3 license
 rule of 4 (constructors ecc...)
 load preset function in synth
-exit condition in while(true) // thread join
+'terminate called without an active exception'
 
 // GUI
 menu
