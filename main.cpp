@@ -11,7 +11,7 @@
 const double BASE_FREQUENCY = 220.0;
 const double SEMITONE_RATIO = pow(2.0, 1.0 / 12.0);
 
-// instatiate the synth
+// synth
 Synth s;
 
 int main() {
@@ -73,6 +73,7 @@ int main() {
 
         // pressing 0 will terminate the program
         if (GetAsyncKeyState(0x30)) {
+            sound.Stop();
             exit = true;
         }
 

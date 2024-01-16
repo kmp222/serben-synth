@@ -12,7 +12,8 @@
 				"-o",
 				"${fileDirname}\\${fileBasenameNoExtension}.exe",
 				"-lwinmm",
-				"-std=c++11"
+				"-std=c++11",
+				"-I${fileDirname}\\include"
 			],
 			"options": {
 				"cwd": "${fileDirname}"
