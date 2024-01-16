@@ -21,7 +21,8 @@ ambient variable COMPILER_PATH
 gnu gpl 3 license
 rule of 4 (constructors ecc...)
 load preset function in synth
-preset cpp 
+preset cpp
+osc amplitude return function
 
 // GUI
 switch output
