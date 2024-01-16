@@ -2,6 +2,7 @@
 
 // an envelope modifies an oscillator's amplitude by multiplying
 // a second amplitude obtained through ADSR parameters w.r.t. time
+
 struct envelopeADSR {
 
     double attack_time;

@@ -2,7 +2,8 @@
 
 #include "utils.hpp"
 
-// an oscillator is made of a basic wave and a LFO for adding textures.
+// an oscillator is made of a basic wave and a LFO for adding textures
+
 struct Osc {
 
     Waves wave = SINE;
