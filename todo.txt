@@ -15,7 +15,6 @@ fix pressed keys showing on cmd when quitting
 // CODE
 amplitude check (safety)
 fix readme
-refactor
 release mode
 standalone exe
 makefile
@@ -24,6 +23,9 @@ comment funcs
 set private/public elements + getters and setters
 compiler absolute/relative path
 gnu gpl 3 license
+rule of 4 (constructors ecc...)
+load preset function in synth
+exit condition in while(true)
 
 // GUI
 menu
@@ -34,3 +36,4 @@ set preset/oscillators params
 extend keyboard
 MIDI input
 import presets
+save preset

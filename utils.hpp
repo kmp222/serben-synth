@@ -2,6 +2,7 @@
 
 #define M_PI 3.14159265358979323846
 
+// list of all possible waves
 enum Waves {
         
     SINE = 0,
@@ -16,4 +17,5 @@ enum Waves {
 // return angular velocity given frequency
 double w(double hertz);
 
+// custom simple GUI
 void print_keyboard();

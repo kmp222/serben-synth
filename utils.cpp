@@ -1,5 +1,6 @@
-#include "utils.hpp"
 #include <iostream>
+
+#include "utils.hpp"
 
 double w(double hertz) {
     return hertz * 2.0 * M_PI;

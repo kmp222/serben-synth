@@ -1,45 +1,36 @@
 #include <cmath>
+
 #include "oscillator.hpp"
+#include "utils.hpp"
 
 #define M_PI 3.14159265358979323846
 
-Osc::Osc() {
-
-    wave = SINE;
-    lfo_hertz = 0;
-    lfo_amplitude = 0;
-
-}
-
-Osc::Osc(Waves w, double lfo_h, double lfo_a) {
-
-    wave = w;
-    lfo_hertz = lfo_h;
-    lfo_amplitude = lfo_a;
-
-}
+Osc::Osc(Waves w, double lfo_h, double lfo_a)
+    :   wave(w),
+        lfo_hertz(lfo_h),
+        lfo_amplitude(lfo_a) {}
 
 double Osc::sound(double time, double frequency) {
 
-    double freq = w(frequency) * time + lfo_amplitude * frequency * sin(w(lfo_hertz) * time);
+    double amp = w(frequency) * time + lfo_amplitude * frequency * sin(w(lfo_hertz) * time);
 
     switch(wave) {
 
         case SINE:
-            return sin(freq);
+            return sin(amp);
 
         case SQUARE:
-            return sin(freq) > 0.0 ? 1.0 : -1.0;
+            return sin(amp) > 0.0 ? 1.0 : -1.0;
         
         case TRIANGLE:
-            return asin( sin(freq) ) * (2.0 / M_PI);
+            return asin( sin(amp) ) * (2.0 / M_PI);
         
         case ANALOG_SAW:
             {
                 double output = 0.0;
                 
                 for (double i = 1.0; i < 50.0; ++i) {
-                    output += ( sin(i * freq)) / i;
+                    output += ( sin(i * amp)) / i;
                 }
 
                 return output * (2.0 / M_PI);
