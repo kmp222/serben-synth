@@ -6,9 +6,9 @@
 #define M_PI 3.14159265358979323846
 
 Osc::Osc(Waves w, double lfo_h, double lfo_a)
-    :   wave(w),
-        lfo_hertz(lfo_h),
-        lfo_amplitude(lfo_a) {}
+    : wave(w),
+      lfo_hertz(lfo_h),
+      lfo_amplitude(lfo_a) {}
 
 double Osc::sound(double time, double frequency) {
 

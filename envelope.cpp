@@ -2,10 +2,10 @@
 
 envelopeADSR::envelopeADSR()
     : attack_time(0.01),
-    decay_time(0.01),
-    release_time(0.01),
-    start_amplitude(1.0),
-    sustain_amplitude(1.0) {}
+      decay_time(0.01),
+      release_time(0.01),
+      start_amplitude(1.0),
+      sustain_amplitude(1.0) {}
 
 envelopeADSR::envelopeADSR(double att, double dec, double rel, double start, double sus)
     : attack_time(att),
