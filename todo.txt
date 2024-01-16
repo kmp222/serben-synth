@@ -4,6 +4,7 @@ unison/stereo
 sequencer (javidx tut)
 distorsion
 add presets (javidx tut)
+delay
 
 // BUGS
 fix transient click
