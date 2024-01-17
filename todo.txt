@@ -22,6 +22,8 @@ gnu gpl 3 license
 rule of 4 (constructors ecc...)
 load preset function in synth
 osc amplitude return function
+envelope for each osc
+comment code
 
 // GUI
 switch output
