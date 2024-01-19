@@ -37,3 +37,7 @@ import presets
 // FUNC
 extend keyboard
 MIDI input
+
+// REPO
+src folder
+git ignore vscode folder & todo
