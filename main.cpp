@@ -16,6 +16,9 @@ Synth s;
 
 int main() {
 
+    printf("Press ENTER key to Continue\n");  
+    getchar(); 
+
     // get sound hw
     vector<wstring> devices = olcNoiseMaker<short>::Enumerate();
 
