@@ -8,13 +8,6 @@ Synth::Synth()
       osc3(0.0, Waves::SINE, 0.0, 0.0)
       {}
 
-Synth::Synth(Preset p)
-    : env(p.attack, p.decay, p.release, p.start, p.sustain),
-      osc1(p.o_volume, p.wave, p.lfo_hertz, p.lfo_amplitude),
-      osc2(p.o2_volume, p.wave2, p.lfo_hertz2, p.lfo_amplitude2),
-      osc3(p.o3_volume, p.wave3, p.lfo_hertz3, p.lfo_amplitude3)
-      {}
-
 // sound = envelope * (sum of waves) w.r.t. time
 // master_volume reduces the overall volume resulting from the sum
 double Synth::master_sound(double time) {
@@ -33,5 +26,30 @@ double Synth::master_sound(double time) {
     master = sound * master_volume;
     
     return master;
+
+}
+
+void Synth::load_preset(Preset p) {
+
+    env.attack_time = p.attack;
+    env.decay_time = p.decay;
+    env.release_time = p.release;
+    env.start_amplitude = p.start;
+    env.sustain_amplitude = p.sustain;
+
+    osc1.volume = p.o_volume;
+    osc1.wave = p.wave;
+    osc1.lfo_hertz = p.lfo_hertz;
+    osc1.lfo_amplitude = p.lfo_amplitude;
+
+    osc2.volume = p.o2_volume;
+    osc2.wave = p.wave2;
+    osc2.lfo_hertz = p.lfo_hertz2;
+    osc2.lfo_amplitude = p.lfo_amplitude2;
+
+    osc3.volume = p.o3_volume;
+    osc3.wave = p.wave3;
+    osc3.lfo_hertz = p.lfo_hertz3;
+    osc3.lfo_amplitude = p.lfo_amplitude3;    
 
 }

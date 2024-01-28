@@ -25,9 +25,9 @@ int main() {
     // link synth sound to the sound machine
     sound.SetUserFunction([](double time) { return s.master_sound(time); });
 
-    print_info();
-
     print_keyboard();
+
+    print_info();
 
     // track key pressing
     bool key_pressed = false;

@@ -22,3 +22,9 @@ std::cout << "|___|___|___|___|___|___|___|___|" << std::endl;
 void print_info() {
     std::cout << "press 0 to terminate the program" << std::endl;
 }
+
+void file_to_preset() {
+
+    
+
+}

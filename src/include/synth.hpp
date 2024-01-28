@@ -9,7 +9,7 @@
 
 struct Synth {
 
-    double master_volume = 2.0;
+    double master_volume = 1.0;
     double frequency = 0.0;
 
     // master envelope
@@ -20,13 +20,13 @@ struct Synth {
     Osc osc2;
     Osc osc3;
 
-    // default preset (simple sine wave)
+    // loads with a default preset (simple sine wave)
     Synth();
-    
-    // custom preset
-    Synth(Preset p);
 
     // return master sound with respect to time
     double master_sound(double time);
+    
+    // set synth variables using a preset
+    void load_preset(Preset p);
 
 };
