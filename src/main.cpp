@@ -5,7 +5,6 @@
 
 #include "utils.hpp"
 #include "synth.hpp"
-#include "preset.hpp"
 
 // sound tuning
 const double BASE_FREQUENCY = 220.0;

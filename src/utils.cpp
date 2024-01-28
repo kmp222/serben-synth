@@ -23,7 +23,7 @@ void print_info() {
     std::cout << "press 0 to terminate the program" << std::endl;
 }
 
-void file_to_preset() {
+void file_to_preset(Preset p) {
 
     
 
