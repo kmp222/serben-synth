@@ -21,7 +21,7 @@ struct Preset {
 
         // osc1 param
         Waves wave;
-        double o1_volume;
+        double o_volume;
         double lfo_hertz;
         double lfo_amplitude;
 
