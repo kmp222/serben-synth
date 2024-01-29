@@ -1,0 +1,32 @@
+{
+    "attack": 0.01,
+    "decay": 1.0,
+    "release": 1.0,
+    "start": 1.0,
+    "sustain": 1.0,
+
+    "oscillators": [
+      {
+        "wave": "SINE",
+        "volume": 1.0,
+        "lfo_hertz": 5.0,
+        "lfo_amplitude": 0.001,
+        "transpose": 0
+      },
+      {
+        "wave": "SINE",
+        "volume": 0.5,
+        "lfo_hertz": 0.0,
+        "lfo_amplitude": 0.0,
+        "transpose": 12
+      },
+      {
+        "wave": "SINE",
+        "volume": 0.25,
+        "lfo_hertz": 0.0,
+        "lfo_amplitude": 0.0,
+        "transpose": 24
+      }
+    ]
+    
+  }

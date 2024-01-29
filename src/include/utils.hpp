@@ -11,4 +11,7 @@ double w(double hertz);
 void print_keyboard();
 void print_info();
 
-void file_to_preset(Preset p);
+// preset serialization
+std::string preset_to_json(Preset p);
+
+Preset json_to_preset(const std::string &s);

@@ -5,13 +5,16 @@
 
 #define M_PI 3.14159265358979323846
 
-Osc::Osc(double v, Waves w, double lfo_h, double lfo_a)
+Osc::Osc(double v, Waves w, double lfo_h, double lfo_a, int t)
     : volume(v),
       wave(w),
       lfo_hertz(lfo_h),
-      lfo_amplitude(lfo_a) {}
+      lfo_amplitude(lfo_a),
+      transpose(t) {}
 
 double Osc::sound(double time, double frequency) {
+    
+    frequency = frequency * pow(2, transpose / 12);
 
     double amp = w(frequency) * time + lfo_amplitude * frequency * sin(w(lfo_hertz) * time);
     double output;

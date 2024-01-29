@@ -2,16 +2,14 @@
 
 Synth::Synth()
     : env(0.01, 0.01, 0.01, 1.0, 1.0),
-      osc1(1.0, Osc::SINE, 0.0, 0.0),
-      osc2(0.0, Osc::SINE, 0.0, 0.0),
-      osc3(0.0, Osc::SINE, 0.0, 0.0)
+      osc1(1.0, Osc::SINE, 0.0, 0.0, 12),
+      osc2(0.0, Osc::SINE, 0.0, 0.0, 0),
+      osc3(0.0, Osc::SINE, 0.0, 0.0, 0)
       {}
 
 // sound = envelope * (sum of waves) w.r.t. time
 // master_volume reduces the overall volume resulting from the sum
 double Synth::master_sound(double time) {
-
-    double master;
 
     double sound = env.get_amplitude(time) *
         (
@@ -21,10 +19,8 @@ double Synth::master_sound(double time) {
             + osc3.sound(time, frequency)
     
         );
-
-    master = sound * master_volume;
     
-    return master;
+    return sound * master_volume;
 
 }
 
