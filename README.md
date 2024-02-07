@@ -2,8 +2,14 @@
 
 c++ synthesizer that utilizes the command line interface and keyboard input.
 
-## Credits
-inspired by the tutorials of [javidx9](https://www.youtube.com/@javidx9).
+[GUI WOP]
 
-the [nlohmann json library](https://github.com/nlohmann/json) has been included in the project to handle serialization and deserialization of data in json format.
+## Credits
+inspired by the tutorials of [javidx9](https://www.youtube.com/@javidx9)
+
+## Libraries
+
+for serialization and deserialization of data in json format, the project includes [nlohmann json](https://github.com/nlohmann/json)
+
+for the gui, the project is linked to [fltk](https://www.fltk.org/)
 

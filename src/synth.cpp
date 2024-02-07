@@ -2,7 +2,7 @@
 #include <math.h>
 
 Synth::Synth()
-    : env(0.01, 0.01, 0.01, 1.0, 1.0),
+    : env(1.0, 0.01, 5.0, 0.7, 0.5),
       osc1(1.0, Osc::SINE, 0.0, 0.0, 0),
       osc2(0.0, Osc::SINE, 0.0, 0.0, 0),
       osc3(0.0, Osc::SINE, 0.0, 0.0, 0)
@@ -47,5 +47,11 @@ void Synth::load_preset(Preset p) {
     osc3.wave = p.wave3;
     osc3.lfo_hertz = p.lfo_hertz3;
     osc3.lfo_amplitude = p.lfo_amplitude3;    
+
+}
+
+void Synth::save_preset() {
+    
+
 
 }

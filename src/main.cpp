@@ -6,6 +6,10 @@
 #include "utils.hpp"
 #include "synth.hpp"
 
+#include "FL/Fl.H"
+#include "FL/Fl_Window.H"
+#include "FL/Fl_Box.H"
+
 // sound tuning
 const double BASE_FREQUENCY = 220.0;
 const double SEMITONE_RATIO = pow(2.0, 1.0 / 12.0);
@@ -13,8 +17,9 @@ const double SEMITONE_RATIO = pow(2.0, 1.0 / 12.0);
 // synth
 Synth s;
 
-int main() {
-    
+// working CLI main
+/* int main() {
+
     // get sound hw
     vector<wstring> devices = olcNoiseMaker<short>::Enumerate();
 
@@ -80,4 +85,46 @@ int main() {
 
     return 0;
     
+}
+
+// raw fltk main
+int main() {
+
+    // Crea una finestra FLTK
+    Fl_Window window(400, 300, "Hello, World!");
+    window.show();
+
+    // Inizializza l'API olcNoiseMaker per la generazione di suoni
+    vector<wstring> devices = olcNoiseMaker<short>::Enumerate();
+    olcNoiseMaker<short> sound(devices[0], 44100, 1, 8, 512);
+    sound.SetUserFunction([](double time) { return s.master_sound(time); });
+
+    // Ciclo di eventi della finestra FLTK
+    while (Fl::wait()) {
+        // Gestione degli eventi della finestra FLTK
+        if (Fl::event() == FL_SHORTCUT && Fl::event_key() == '0') {
+            // Se premi '0', termina il programma
+            break;
+        }
+
+        // Gestione della generazione di suoni sincronizzata con gli eventi della finestra
+        // Aggiungi qui la logica per generare suoni
+    }
+
+    // Termina l'API olcNoiseMaker
+    sound.Stop();
+
+    return 0;
+
+} */
+
+// wop main
+int main(int argc, char** argv) {
+
+    Fl_Window window(200, 200, "windows title");
+    Fl_Box box(0, 0, 200, 200, "hYEEYEYE");
+    window.show();
+
+    return Fl::run();
+
 }

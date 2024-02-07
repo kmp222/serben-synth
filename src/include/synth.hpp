@@ -29,4 +29,7 @@ struct Synth {
     // set synth variables using a preset
     void load_preset(Preset p);
 
+    // save synth variables
+    void save_preset();
+
 };
