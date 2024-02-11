@@ -30,6 +30,6 @@ struct Synth {
     void load_preset(Preset p);
 
     // save synth variables
-    void save_preset();
+    Preset save_preset();
 
 };

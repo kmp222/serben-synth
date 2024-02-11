@@ -90,28 +90,24 @@ Synth s;
 // raw fltk main
 int main() {
 
-    // Crea una finestra FLTK
     Fl_Window window(400, 300, "Hello, World!");
     window.show();
 
-    // Inizializza l'API olcNoiseMaker per la generazione di suoni
+    // olcNoiseMaker
     vector<wstring> devices = olcNoiseMaker<short>::Enumerate();
     olcNoiseMaker<short> sound(devices[0], 44100, 1, 8, 512);
     sound.SetUserFunction([](double time) { return s.master_sound(time); });
 
-    // Ciclo di eventi della finestra FLTK
+    // ciclo di eventi
     while (Fl::wait()) {
         // Gestione degli eventi della finestra FLTK
         if (Fl::event() == FL_SHORTCUT && Fl::event_key() == '0') {
-            // Se premi '0', termina il programma
             break;
         }
 
-        // Gestione della generazione di suoni sincronizzata con gli eventi della finestra
-        // Aggiungi qui la logica per generare suoni
+        // logic
     }
 
-    // Termina l'API olcNoiseMaker
     sound.Stop();
 
     return 0;
@@ -121,8 +117,7 @@ int main() {
 // wop main
 int main(int argc, char** argv) {
 
-    Fl_Window window(200, 200, "windows title");
-    Fl_Box box(0, 0, 200, 200, "hYEEYEYE");
+    Fl_Window window(800, 600, "Serben Synth");
     window.show();
 
     return Fl::run();

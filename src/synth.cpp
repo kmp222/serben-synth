@@ -50,8 +50,17 @@ void Synth::load_preset(Preset p) {
 
 }
 
-void Synth::save_preset() {
+Preset Synth::save_preset() {
     
+    Preset p(
 
+        env.attack_time, env.decay_time, env.release_time, env.start_amplitude, env.sustain_amplitude,
+        osc1.wave, osc1.volume, osc1.lfo_hertz, osc1.lfo_amplitude, osc1.transpose,
+        osc2.wave, osc2.volume, osc2.lfo_hertz, osc2.lfo_amplitude, osc2.transpose,
+        osc3.wave, osc3.volume, osc3.lfo_hertz, osc3.lfo_amplitude, osc3.transpose
+    
+        );
+
+    return p;
 
 }
