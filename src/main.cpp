@@ -9,6 +9,8 @@
 #include "FL/Fl.H"
 #include "FL/Fl_Window.H"
 #include "FL/Fl_Box.H"
+#include <FL/Fl_PNG_Image.H>
+#include <FL/Fl_Button.H>
 
 // sound tuning
 const double BASE_FREQUENCY = 220.0;
@@ -118,7 +120,16 @@ int main() {
 int main(int argc, char** argv) {
 
     Fl_Window window(800, 600, "Serben Synth");
+    Fl_Box b(100, 500, 0, 0);
+
+    Fl_Image* image = new Fl_PNG_Image("resources/images/serben.png");
+    Fl_Image* scaled_image = image->copy(100, 100);
+
+    b.image(scaled_image);
+
     window.show();
+
+    delete image;
 
     return Fl::run();
 
