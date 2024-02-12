@@ -1,8 +1,6 @@
 # Synthesizer
 
-c++ synthesizer that utilizes the command line interface and keyboard input.
-
-[GUI WOP]
+c++ synthesizer that utilizes the command line interface and keyboard input. [gui wip]
 
 ## Credits
 inspired by the tutorials of [javidx9](https://www.youtube.com/@javidx9)
