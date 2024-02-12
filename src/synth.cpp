@@ -2,7 +2,7 @@
 #include <math.h>
 
 Synth::Synth()
-    : env(1.0, 0.01, 5.0, 0.7, 0.5),
+    : env(0.01, 0.01, 1.0, 1.0, 1.0),
       osc1(1.0, Osc::SINE, 0.0, 0.0, 0),
       osc2(0.0, Osc::SINE, 0.0, 0.0, 0),
       osc3(0.0, Osc::SINE, 0.0, 0.0, 0)

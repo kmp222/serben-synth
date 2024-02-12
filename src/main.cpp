@@ -10,7 +10,6 @@
 #include "FL/Fl_Window.H"
 #include "FL/Fl_Box.H"
 #include <FL/Fl_PNG_Image.H>
-#include <FL/Fl_Button.H>
 
 // sound tuning
 const double BASE_FREQUENCY = 220.0;
@@ -87,42 +86,15 @@ Synth s;
 
     return 0;
     
-}
-
-// raw fltk main
-int main() {
-
-    Fl_Window window(400, 300, "Hello, World!");
-    window.show();
-
-    // olcNoiseMaker
-    vector<wstring> devices = olcNoiseMaker<short>::Enumerate();
-    olcNoiseMaker<short> sound(devices[0], 44100, 1, 8, 512);
-    sound.SetUserFunction([](double time) { return s.master_sound(time); });
-
-    // ciclo di eventi
-    while (Fl::wait()) {
-        // Gestione degli eventi della finestra FLTK
-        if (Fl::event() == FL_SHORTCUT && Fl::event_key() == '0') {
-            break;
-        }
-
-        // logic
-    }
-
-    sound.Stop();
-
-    return 0;
-
 } */
 
-// wop main
+// wop gui main
 int main(int argc, char** argv) {
 
     Fl_Window window(800, 600, "Serben Synth");
-    Fl_Box b(100, 500, 0, 0);
+    Fl_Box b(700, 500, 0, 0);
 
-    Fl_Image* image = new Fl_PNG_Image("resources/images/serben.png");
+    Fl_Image* image = new Fl_PNG_Image("src/resources/images/serben.png");
     Fl_Image* scaled_image = image->copy(100, 100);
 
     b.image(scaled_image);
