@@ -11,12 +11,40 @@
 #include "FL/Fl_Box.H"
 #include <FL/Fl_PNG_Image.H>
 
-// sound tuning
-const double BASE_FREQUENCY = 220.0;
-const double SEMITONE_RATIO = pow(2.0, 1.0 / 12.0);
+const double BASE_FREQUENCY = 220.0; // sound tuning
+const double SEMITONE_RATIO = pow(2.0, 1.0 / 12.0); // sound tuning
+Synth s; // singleton
+vector<wstring> devices = olcNoiseMaker<short>::Enumerate(); // sound hw
+olcNoiseMaker<short> sound(devices[0], 44100, 1, 8, 512); // sound machine
 
-// synth
-Synth s;
+static void play_sound(int key) {
+
+}
+
+static void release_sound() {
+
+}
+
+// override handle method
+class MyWindow : public Fl_Window {
+
+public:
+    MyWindow(int w, int h, const char* title) : Fl_Window(w, h, title) {}
+
+    int handle(int event) override {
+        switch (event) {
+        case FL_KEYDOWN:
+            play_sound(Fl::event_key());
+            return 1;
+        case FL_KEYUP:
+            release_sound();
+            return 1;
+        default:
+            return Fl_Window::handle(event);
+        }
+    }
+
+};
 
 // working CLI main
 /* int main() {
@@ -89,19 +117,22 @@ Synth s;
 } */
 
 // wop gui main
-int main(int argc, char** argv) {
+int main() {
 
-    Fl_Window window(800, 600, "Serben Synth");
+    // link synth sound to the sound machine
+    sound.SetUserFunction([](double time) { return s.master_sound(time); });
+
+    MyWindow window(800, 600, "Serben Synth");
     Fl_Box b(700, 500, 0, 0);
-
     Fl_Image* image = new Fl_PNG_Image("src/resources/images/serben.png");
     Fl_Image* scaled_image = image->copy(100, 100);
-
-    b.image(scaled_image);
-
-    window.show();
-
     delete image;
+    image = nullptr;
+    b.image(scaled_image);
+    
+    window.handle(FL_KEYDOWN | FL_KEYUP);
+    window.end();
+    window.show();
 
     return Fl::run();
 

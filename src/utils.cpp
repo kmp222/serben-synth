@@ -7,7 +7,7 @@ double w(double hertz) {
     return hertz * 2.0 * M_PI;
 }
 
-void print_keyboard() {
+/* void print_keyboard() {
 
 std::cout << "________________________________" << std::endl;
 std::cout << "|  | |  |  | | | |  |  | | | |  |" << std::endl;
@@ -22,7 +22,7 @@ std::cout << "|___|___|___|___|___|___|___|___|" << std::endl;
 
 void print_info() {
     std::cout << "press 0 to terminate the program" << std::endl;
-}
+} */
 
 using json = nlohmann::json;
 
