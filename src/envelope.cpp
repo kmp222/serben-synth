@@ -3,7 +3,7 @@
 envelopeADSR::envelopeADSR()
     : attack_time(0.01),
       decay_time(0.01),
-      release_time(0.01),
+      release_time(1.00),
       start_amplitude(1.0),
       sustain_amplitude(1.0) {}
 

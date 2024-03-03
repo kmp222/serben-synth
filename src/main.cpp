@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <map>
 
 #include "olcNoiseMaker.h"
 
@@ -16,12 +17,50 @@ const double SEMITONE_RATIO = pow(2.0, 1.0 / 12.0); // sound tuning
 Synth s; // singleton
 vector<wstring> devices = olcNoiseMaker<short>::Enumerate(); // sound hw
 olcNoiseMaker<short> sound(devices[0], 44100, 1, 8, 512); // sound machine
+boolean is_key_pressed = false;
+char key_pressed = ' ';
 
-static void play_sound(int key) {
+std::map<char, int> keyboard = {
+    {'z', 0},
+    {'s', 1},
+    {'x', 2},
+    {'c', 3},
+    {'f', 4},
+    {'v', 5},
+    {'g', 6},
+    {'b', 7},
+    {'n', 8},
+    {'j', 9},
+    {'m', 10},
+    {'k', 11},
+    {',', 12}
+};
 
+void play_sound(const char* key) {
+
+    // if a new note is captured, we set the correct frequency
+    if (key[0] != key_pressed) {
+
+        key_pressed = keyboard.at(key[0]);
+        s.frequency = BASE_FREQUENCY * pow(SEMITONE_RATIO, key_pressed);
+        s.env.note_on(sound.GetTime());
+
+    }
+   
+    // if the note hasn't changed, we don't need to set the frequency again
+    is_key_pressed = true;
+   
 }
 
-static void release_sound() {
+void release_sound() {
+
+    if (!is_key_pressed) {
+
+        s.env.note_off(sound.GetTime());
+        key_pressed = ' ';
+        s.frequency = 0.0;
+
+    }
 
 }
 
@@ -32,9 +71,13 @@ public:
     MyWindow(int w, int h, const char* title) : Fl_Window(w, h, title) {}
 
     int handle(int event) override {
+
+        is_key_pressed = false;
+
         switch (event) {
         case FL_KEYDOWN:
-            play_sound(Fl::event_key());
+            play_sound(Fl::event_text());
+            release_sound();
             return 1;
         case FL_KEYUP:
             release_sound();
@@ -42,6 +85,7 @@ public:
         default:
             return Fl_Window::handle(event);
         }
+
     }
 
 };
