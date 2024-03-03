@@ -1,13 +1,14 @@
 # Synthesizer
 
-c++ synthesizer that utilizes the command line interface and keyboard input. [gui wip]
-
-## Credits
-inspired by the tutorials of [javidx9](https://www.youtube.com/@javidx9)
+c++ synthesizer with keyboard input. (gui wip)
 
 ## Libraries
 
-for serialization and deserialization of data in json format, the project includes [nlohmann json](https://github.com/nlohmann/json)
+control audio output hardware [javidx9](https://www.youtube.com/@javidx9)
 
-for the gui, the project is linked to [fltk](https://www.fltk.org/)
+gui [fltk](https://www.fltk.org/)
+
+json serialization/deserialization [nlohmann json](https://github.com/nlohmann/json)
+
+
 
