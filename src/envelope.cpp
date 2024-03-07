@@ -59,7 +59,7 @@ double envelopeADSR::get_amplitude(double time) {
 
     }
 
-    if (amplitude <= 0.0) {
+    if (amplitude <= 0.1) {
         amplitude = 0.0;
     }
 

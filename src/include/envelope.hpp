@@ -5,12 +5,12 @@
 
 struct envelopeADSR {
 
-    double attack_time;
-    double decay_time;
-    double release_time;
+    double attack_time; // seconds it takes to reach start_amplitude
+    double decay_time; // seconds it takes after the attack to settle to a constant volume (sustain_amplitude)
+    double release_time; // seconds it takes to fade
 
-    double start_amplitude;
-    double sustain_amplitude;
+    double start_amplitude; // volume after attack
+    double sustain_amplitude; // sustain volume
 
     // these vars track the time of the note being pressed and released
     double trigger_on_time = 0.0;

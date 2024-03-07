@@ -37,13 +37,13 @@ std::map<char, int> keyboard = {
 };
 
 void play_sound(const char* key) {
-
+    
     // if a new note is captured, we set the correct frequency
     if (key[0] != key_pressed) {
 
-        key_pressed = keyboard.at(key[0]);
-        s.frequency = BASE_FREQUENCY * pow(SEMITONE_RATIO, key_pressed);
+        s.frequency = BASE_FREQUENCY * pow(SEMITONE_RATIO, keyboard.at(key[0]));
         s.env.note_on(sound.GetTime());
+        key_pressed = key[0];
 
     }
    
@@ -77,7 +77,6 @@ public:
         switch (event) {
         case FL_KEYDOWN:
             play_sound(Fl::event_text());
-            release_sound();
             return 1;
         case FL_KEYUP:
             release_sound();
@@ -90,7 +89,7 @@ public:
 
 };
 
-// working CLI main
+// CLI main
 /* int main() {
 
     // get sound hw
