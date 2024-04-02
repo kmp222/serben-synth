@@ -1,4 +1,5 @@
 #include "envelope.hpp"
+#include <iostream>
 
 envelopeADSR::envelopeADSR()
     : attack_time(0.01),
@@ -45,14 +46,17 @@ double envelopeADSR::get_amplitude(double time) {
         lifetime = trigger_off_time - time;
 
         // release
-        if (lifetime <= attack_time)
+        if (lifetime <= attack_time) {
             release_amplitude = (lifetime / attack_time) * start_amplitude;
+        }
 
-        if (lifetime > attack_time && lifetime <= (attack_time + decay_time))
+        if (lifetime > attack_time && lifetime <= (attack_time + decay_time)) {
             release_amplitude = ((lifetime - attack_time) / decay_time) * (sustain_amplitude - start_amplitude) + start_amplitude;
+        }
 
-        if (lifetime > (attack_time + decay_time))
+        if (lifetime > (attack_time + decay_time)) {
             release_amplitude = sustain_amplitude;
+        }
         
         amplitude = ((time - trigger_off_time) / release_time) *
             (0.0 - release_amplitude) + release_amplitude;

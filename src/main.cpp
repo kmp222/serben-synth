@@ -11,6 +11,8 @@
 #include "FL/Fl_Window.H"
 #include "FL/Fl_Box.H"
 #include <FL/Fl_PNG_Image.H>
+#include <FL/Fl_Value_Slider.H>
+#include <FL/Fl_Choice.H>
 
 const double BASE_FREQUENCY = 220.0; // sound tuning
 const double SEMITONE_RATIO = pow(2.0, 1.0 / 12.0); // sound tuning
@@ -89,6 +91,25 @@ public:
 
 };
 
+// generic slider
+template<typename T>
+void slider_callback(Fl_Widget* widget, void* data) {
+
+    Fl_Value_Slider* slider = static_cast<Fl_Value_Slider*>(widget);
+    T* value_ptr = static_cast<T*>(data);
+    *value_ptr = static_cast<T>(slider->value());
+
+}
+
+// waves choice
+void choice_callback(Fl_Widget* widget, void* data) {
+
+    Fl_Choice* choice = static_cast<Fl_Choice*>(widget);
+    Osc::Waves* wave = static_cast<Osc::Waves*>(data);
+    *wave = static_cast<Osc::Waves>(choice->value());
+
+}
+
 // CLI main
 /* int main() {
 
@@ -165,6 +186,7 @@ int main() {
     // link synth sound to the sound machine
     sound.SetUserFunction([](double time) { return s.master_sound(time); });
 
+    // gui setup
     MyWindow window(800, 600, "Serben Synth");
     Fl_Box b(700, 500, 0, 0);
     Fl_Image* image = new Fl_PNG_Image("src/resources/images/serben.png");
@@ -172,7 +194,100 @@ int main() {
     delete image;
     image = nullptr;
     b.image(scaled_image);
+
+    // attack slider
+    double* attack = &(s.env.attack_time);
+    Fl_Value_Slider* attack_slider = new Fl_Value_Slider(10, 10, 280, 25, "attack"); // x, y, width, length, name
+    attack_slider->type(FL_HORIZONTAL);
+    attack_slider->bounds(0, 10); // bounds
+    attack_slider->step(0.01); // increment
+    attack_slider->value(*attack); // init value
+    attack_slider->callback(slider_callback<double>, attack);
+
+    // decay slider
+    double* decay = &(s.env.decay_time);
+    Fl_Value_Slider* decay_slider = new Fl_Value_Slider(10, 60, 280, 25, "decay");
+    decay_slider->type(FL_HORIZONTAL);
+    decay_slider->bounds(0, 10);
+    decay_slider->step(0.01);
+    decay_slider->value(*decay);
+    decay_slider->callback(slider_callback<double>, decay);
+
+    // sustain slider
+    double* sustain = &(s.env.sustain_amplitude);
+    Fl_Value_Slider* sustain_slider = new Fl_Value_Slider(10, 110, 280, 25, "sustain volume");
+    sustain_slider->type(FL_HORIZONTAL);
+    sustain_slider->bounds(0, 1);
+    sustain_slider->step(0.01);
+    sustain_slider->value(*sustain);
+    sustain_slider->callback(slider_callback<double>, sustain);
+
+    // release slider
+    double* release = &(s.env.release_time);
+    Fl_Value_Slider* release_slider = new Fl_Value_Slider(10, 160, 280, 25, "release");
+    release_slider->type(FL_HORIZONTAL);
+    release_slider->bounds(0, 10);
+    release_slider->step(0.01);
+    release_slider->value(*release);
+    release_slider->callback(slider_callback<double>, release);
+
+    // volume post attack
+    double* start_volume = &(s.env.start_amplitude);
+    Fl_Value_Slider* start_volume_slider = new Fl_Value_Slider(10, 210, 280, 25, "start volume");
+    start_volume_slider->type(FL_HORIZONTAL);
+    start_volume_slider->bounds(0, 1);
+    start_volume_slider->step(0.01);
+    start_volume_slider->value(*start_volume);
+    start_volume_slider->callback(slider_callback<double>, start_volume);
+
+    // master volume
+    double* master_volume = &(s.master_volume);
+    Fl_Value_Slider* master_volume_slider = new Fl_Value_Slider(510, 10, 280, 25, "master volume");
+    master_volume_slider->type(FL_HORIZONTAL);
+    master_volume_slider->bounds(0, 1);
+    master_volume_slider->step(0.01);
+    master_volume_slider->value(*master_volume);
+    master_volume_slider->callback(slider_callback<double>, master_volume);
+
+    // osc volumes, transpose, lfo hertz, lfo amplitude
     
+    // osc1 wave
+    Fl_Choice* osc1_wave = new Fl_Choice(60, 260, 280, 25, "osc 1");
+    Osc::Waves* wave = &(s.osc1.wave);
+    osc1_wave->add("sine");
+    osc1_wave->add("square");
+    osc1_wave->add("triangle");
+    osc1_wave->add("analog saw");
+    osc1_wave->add("digital saw");
+    osc1_wave->add("noise");
+    osc1_wave->value(*wave);
+    osc1_wave->callback(choice_callback, wave);
+
+    // osc2 wave
+    Fl_Choice* osc2_wave = new Fl_Choice(60, 310, 280, 25, "osc 2");
+    Osc::Waves* wave2 = &(s.osc2.wave);
+    osc2_wave->add("Sine");
+    osc2_wave->add("Square");
+    osc2_wave->add("Triangle");
+    osc2_wave->add("Analog Saw");
+    osc2_wave->add("Digital Saw");
+    osc2_wave->add("Noise");
+    osc2_wave->value(*wave2);
+    osc2_wave->callback(choice_callback, wave2);
+
+    // osc3 wave
+    Fl_Choice* osc3_wave = new Fl_Choice(60, 360, 280, 25, "osc 3");
+    Osc::Waves* wave3 = &(s.osc3.wave);
+    osc3_wave->add("Sine");
+    osc3_wave->add("Square");
+    osc3_wave->add("Triangle");
+    osc3_wave->add("Analog Saw");
+    osc3_wave->add("Digital Saw");
+    osc3_wave->add("Noise");
+    osc3_wave->value(*wave3);
+    osc3_wave->callback(choice_callback, wave3);
+
+    // handling and display
     window.handle(FL_KEYDOWN | FL_KEYUP);
     window.end();
     window.show();
