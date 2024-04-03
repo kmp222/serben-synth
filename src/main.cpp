@@ -249,7 +249,34 @@ int main() {
     master_volume_slider->value(*master_volume);
     master_volume_slider->callback(slider_callback<double>, master_volume);
 
-    // osc volumes, transpose, lfo hertz, lfo amplitude
+    // osc transpose, lfo hertz, lfo amplitude
+
+    // osc1 volume
+    double* osc1_volume = &(s.osc1.volume);
+    Fl_Value_Slider* osc1_volume_slider = new Fl_Value_Slider(260, 260, 280, 25, "osc1 volume");
+    osc1_volume_slider->type(FL_HORIZONTAL);
+    osc1_volume_slider->bounds(0, 1);
+    osc1_volume_slider->step(0.01);
+    osc1_volume_slider->value(*osc1_volume);
+    osc1_volume_slider->callback(slider_callback<double>, osc1_volume);
+
+    // osc2 volume
+    double* osc2_volume = &(s.osc2.volume);
+    Fl_Value_Slider* osc2_volume_slider = new Fl_Value_Slider(260, 310, 280, 25, "osc2 volume");
+    osc2_volume_slider->type(FL_HORIZONTAL);
+    osc2_volume_slider->bounds(0, 1);
+    osc2_volume_slider->step(0.01);
+    osc2_volume_slider->value(*osc1_volume);
+    osc2_volume_slider->callback(slider_callback<double>, osc2_volume);
+
+    // osc3 volume
+    double* osc3_volume = &(s.osc3.volume);
+    Fl_Value_Slider* osc3_volume_slider = new Fl_Value_Slider(260, 360, 280, 25, "osc3 volume");
+    osc3_volume_slider->type(FL_HORIZONTAL);
+    osc3_volume_slider->bounds(0, 1);
+    osc3_volume_slider->step(0.01);
+    osc3_volume_slider->value(*osc3_volume);
+    osc3_volume_slider->callback(slider_callback<double>, osc3_volume);
     
     // osc1 wave
     Fl_Choice* osc1_wave = new Fl_Choice(60, 260, 280, 25, "osc 1");
@@ -266,24 +293,24 @@ int main() {
     // osc2 wave
     Fl_Choice* osc2_wave = new Fl_Choice(60, 310, 280, 25, "osc 2");
     Osc::Waves* wave2 = &(s.osc2.wave);
-    osc2_wave->add("Sine");
-    osc2_wave->add("Square");
-    osc2_wave->add("Triangle");
-    osc2_wave->add("Analog Saw");
-    osc2_wave->add("Digital Saw");
-    osc2_wave->add("Noise");
+    osc2_wave->add("sine");
+    osc2_wave->add("square");
+    osc2_wave->add("triangle");
+    osc2_wave->add("analog saw");
+    osc2_wave->add("digital saw");
+    osc2_wave->add("noise");
     osc2_wave->value(*wave2);
     osc2_wave->callback(choice_callback, wave2);
 
     // osc3 wave
     Fl_Choice* osc3_wave = new Fl_Choice(60, 360, 280, 25, "osc 3");
     Osc::Waves* wave3 = &(s.osc3.wave);
-    osc3_wave->add("Sine");
-    osc3_wave->add("Square");
-    osc3_wave->add("Triangle");
-    osc3_wave->add("Analog Saw");
-    osc3_wave->add("Digital Saw");
-    osc3_wave->add("Noise");
+    osc3_wave->add("sine");
+    osc3_wave->add("square");
+    osc3_wave->add("triangle");
+    osc3_wave->add("analog saw");
+    osc3_wave->add("digital saw");
+    osc3_wave->add("noise");
     osc3_wave->value(*wave3);
     osc3_wave->callback(choice_callback, wave3);
 
