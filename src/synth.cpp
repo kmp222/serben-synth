@@ -15,9 +15,9 @@ double Synth::master_sound(double time) {
     double sound = env.get_amplitude(time) *
         (
 
-            + osc1.sound(time, frequency)
-            + osc2.sound(time, frequency)
-            + osc3.sound(time, frequency)
+            +osc1.sound(time, frequency)
+            +osc2.sound(time, frequency)
+            +osc3.sound(time, frequency)
     
         );
     

@@ -20,9 +20,9 @@ struct Osc {
     Waves wave = SINE;
     double lfo_hertz = 0.0;
     double lfo_amplitude = 0.0;
-    int transpose = 0;
+    double transpose = 12;
 
-    Osc(double v, Waves w, double lfo_h, double lfo_a, int t);
+    Osc(double v, Waves w, double lfo_h, double lfo_a, double t);
 
     // returns wave amplitude value w.r.t. time and frequency of note
     double sound(double time, double frequency);

@@ -13,8 +13,9 @@
 #include <FL/Fl_PNG_Image.H>
 #include <FL/Fl_Value_Slider.H>
 #include <FL/Fl_Choice.H>
+#include <FL/Fl_Simple_Counter.H>
 
-const double BASE_FREQUENCY = 220.0; // sound tuning
+double BASE_FREQUENCY = 220.0; // sound tuning
 const double SEMITONE_RATIO = pow(2.0, 1.0 / 12.0); // sound tuning
 Synth s; // singleton
 vector<wstring> devices = olcNoiseMaker<short>::Enumerate(); // sound hw
@@ -91,7 +92,7 @@ public:
 
 };
 
-// generic slider
+// generic slider callback
 template<typename T>
 void slider_callback(Fl_Widget* widget, void* data) {
 
@@ -101,7 +102,7 @@ void slider_callback(Fl_Widget* widget, void* data) {
 
 }
 
-// waves choice
+// waves choice callback
 void choice_callback(Fl_Widget* widget, void* data) {
 
     Fl_Choice* choice = static_cast<Fl_Choice*>(widget);
@@ -109,6 +110,16 @@ void choice_callback(Fl_Widget* widget, void* data) {
     *wave = static_cast<Osc::Waves>(choice->value());
 
 }
+
+// transpose choice callback
+void counter_callback(Fl_Widget* widget, void* data) {
+
+    Fl_Counter* counter = static_cast<Fl_Counter*>(widget);
+    double* transpose = static_cast<double*>(data);
+    *transpose = static_cast<double>(counter->value());
+
+}
+
 
 // CLI main
 /* int main() {
@@ -249,11 +260,55 @@ int main() {
     master_volume_slider->value(*master_volume);
     master_volume_slider->callback(slider_callback<double>, master_volume);
 
-    // osc transpose, lfo hertz, lfo amplitude
+    // three lfo's are unnecessary so only one is exposed to the user
+    // lfo hertz
+    double* lfo_hertz = &(s.osc1.lfo_hertz);
+    Fl_Value_Slider* lfo_hertz_slider = new Fl_Value_Slider(510, 60, 100, 25, "lfo hertz");
+    lfo_hertz_slider->type(FL_HORIZONTAL);
+    lfo_hertz_slider->bounds(0, 20);
+    lfo_hertz_slider->step(0.01);
+    lfo_hertz_slider->value(*lfo_hertz);
+    lfo_hertz_slider->callback(slider_callback<double>, lfo_hertz);
+
+    // lfo amplitude
+    double* lfo_amp = &(s.osc1.lfo_amplitude);
+    Fl_Value_Slider* lfo_amp_slider = new Fl_Value_Slider(510, 110, 100, 25, "lfo amplitude");
+    lfo_amp_slider->type(FL_HORIZONTAL);
+    lfo_amp_slider->bounds(0, 1);
+    lfo_amp_slider->step(0.01);
+    lfo_amp_slider->value(*lfo_amp);
+    lfo_amp_slider->callback(slider_callback<double>, lfo_amp);
+
+    // osc1 transpose
+    double* osc1_transpose = &(s.osc1.transpose);
+    Fl_Simple_Counter* osc1_transpose_counter = new Fl_Simple_Counter(600, 260, 50, 25, "osc1 transpose");
+    osc1_transpose_counter->type(FL_HORIZONTAL);
+    osc1_transpose_counter->bounds(-24, 24);
+    osc1_transpose_counter->step(1);
+    osc1_transpose_counter->value(*osc1_transpose);
+    osc1_transpose_counter->callback(counter_callback, osc1_transpose);
+
+    // osc2 transpose
+    double* osc2_transpose = &(s.osc2.transpose);
+    Fl_Simple_Counter* osc2_transpose_counter = new Fl_Simple_Counter(600, 310, 50, 25, "osc2 transpose");
+    osc2_transpose_counter->type(FL_HORIZONTAL);
+    osc2_transpose_counter->bounds(-24, 24);
+    osc2_transpose_counter->step(1);
+    osc2_transpose_counter->value(*osc2_transpose);
+    osc2_transpose_counter->callback(counter_callback, osc2_transpose);
+
+    // osc3 transpose
+    double* osc3_transpose = &(s.osc3.transpose);
+    Fl_Simple_Counter* osc3_transpose_counter = new Fl_Simple_Counter(600, 360, 50, 25, "osc3 transpose");
+    osc3_transpose_counter->type(FL_HORIZONTAL);
+    osc3_transpose_counter->bounds(-24, 24);
+    osc3_transpose_counter->step(1);
+    osc3_transpose_counter->value(*osc3_transpose);
+    osc3_transpose_counter->callback(counter_callback, osc3_transpose);
 
     // osc1 volume
     double* osc1_volume = &(s.osc1.volume);
-    Fl_Value_Slider* osc1_volume_slider = new Fl_Value_Slider(260, 260, 280, 25, "osc1 volume");
+    Fl_Value_Slider* osc1_volume_slider = new Fl_Value_Slider(400, 260, 100, 25, "osc1 volume");
     osc1_volume_slider->type(FL_HORIZONTAL);
     osc1_volume_slider->bounds(0, 1);
     osc1_volume_slider->step(0.01);
@@ -262,16 +317,16 @@ int main() {
 
     // osc2 volume
     double* osc2_volume = &(s.osc2.volume);
-    Fl_Value_Slider* osc2_volume_slider = new Fl_Value_Slider(260, 310, 280, 25, "osc2 volume");
+    Fl_Value_Slider* osc2_volume_slider = new Fl_Value_Slider(400, 310, 100, 25, "osc2 volume");
     osc2_volume_slider->type(FL_HORIZONTAL);
     osc2_volume_slider->bounds(0, 1);
     osc2_volume_slider->step(0.01);
-    osc2_volume_slider->value(*osc1_volume);
+    osc2_volume_slider->value(*osc2_volume);
     osc2_volume_slider->callback(slider_callback<double>, osc2_volume);
 
     // osc3 volume
     double* osc3_volume = &(s.osc3.volume);
-    Fl_Value_Slider* osc3_volume_slider = new Fl_Value_Slider(260, 360, 280, 25, "osc3 volume");
+    Fl_Value_Slider* osc3_volume_slider = new Fl_Value_Slider(400, 360, 100, 25, "osc3 volume");
     osc3_volume_slider->type(FL_HORIZONTAL);
     osc3_volume_slider->bounds(0, 1);
     osc3_volume_slider->step(0.01);
