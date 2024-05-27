@@ -84,10 +84,17 @@ public:
         case FL_KEYUP:
             release_sound();
             return 1;
+        case FL_HIDE:
+            close();
         default:
             return Fl_Window::handle(event);
         }
 
+    }
+
+    void close() {
+        sound.Stop(); 
+        Fl_Window::hide();
     }
 
 };
@@ -339,8 +346,8 @@ int main() {
     osc1_wave->add("sine");
     osc1_wave->add("square");
     osc1_wave->add("triangle");
-    osc1_wave->add("analog saw");
-    osc1_wave->add("digital saw");
+    // osc1_wave->add("analog saw");
+    osc1_wave->add("saw");
     osc1_wave->add("noise");
     osc1_wave->value(*wave);
     osc1_wave->callback(choice_callback, wave);
@@ -351,8 +358,8 @@ int main() {
     osc2_wave->add("sine");
     osc2_wave->add("square");
     osc2_wave->add("triangle");
-    osc2_wave->add("analog saw");
-    osc2_wave->add("digital saw");
+    // osc2_wave->add("analog saw");
+    osc2_wave->add("saw");
     osc2_wave->add("noise");
     osc2_wave->value(*wave2);
     osc2_wave->callback(choice_callback, wave2);
@@ -363,8 +370,8 @@ int main() {
     osc3_wave->add("sine");
     osc3_wave->add("square");
     osc3_wave->add("triangle");
-    osc3_wave->add("analog saw");
-    osc3_wave->add("digital saw");
+    // osc3_wave->add("analog saw");
+    osc3_wave->add("saw");
     osc3_wave->add("noise");
     osc3_wave->value(*wave3);
     osc3_wave->callback(choice_callback, wave3);

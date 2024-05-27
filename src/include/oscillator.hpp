@@ -10,9 +10,8 @@ struct Osc {
         SINE = 0,
         SQUARE = 1,
         TRIANGLE = 2,
-        ANALOG_SAW = 3,
-        DIGITAL_SAW = 4,
-        NOISE = 5
+        DIGITAL_SAW = 3,
+        NOISE = 4
 
     };
     

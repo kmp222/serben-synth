@@ -2,6 +2,7 @@
 
 #include "oscillator.hpp"
 #include "utils.hpp"
+#include <iostream>
 
 #define M_PI 3.14159265358979323846
 
@@ -33,7 +34,7 @@ double Osc::sound(double time, double frequency) {
             output = asin( sin(amp) ) * (2.0 / M_PI);
             break;
         
-        case ANALOG_SAW:
+        /* case ANALOG_SAW:
             {
                 double output = 0.0;
                 
@@ -43,18 +44,23 @@ double Osc::sound(double time, double frequency) {
 
                 output = output * (2.0 / M_PI);
             }
-            break;
+            break; */
         
         case DIGITAL_SAW:
             output = (frequency * M_PI * fmod(time, 1.0 / frequency)) * (2.0 / M_PI) - (M_PI / 2.0);
             break;
 
         case NOISE:
-            output = 2.0 * ((double) rand() / (double) RAND_MAX) - 1.0;
+            output = frequency != 0 ? 2.0 * ((double) rand() / (double) RAND_MAX) * amp - 1.0 : 0;
             break;
 
+        /* case LASER:
+            output = (amp * M_PI * fmod(time, 1.0 / amp)) * (2.0 / M_PI) - (M_PI / 2.0)
+            break;
+        */
+
         default:
-            output =  1.0;
+            output = 0.0;
 
     }
 
