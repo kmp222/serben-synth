@@ -23,30 +23,30 @@ olcNoiseMaker<short> sound(devices[0], 44100, 1, 8, 512); // sound machine
 boolean is_key_pressed = false;
 char key_pressed = ' ';
 
-std::map<char, int> keyboard = {
-    {'z', 0},
-    {'s', 1},
-    {'x', 2},
-    {'c', 3},
-    {'f', 4},
-    {'v', 5},
-    {'g', 6},
-    {'b', 7},
-    {'n', 8},
-    {'j', 9},
-    {'m', 10},
-    {'k', 11},
-    {',', 12}
+std::map<int, int> keyboard = {
+    {0x7A, 0},  // z
+    {0x73, 1},  // s
+    {0x78, 2},  // x
+    {0x63, 3},  // c
+    {0x66, 4},  // f
+    {0x76, 5},  // v
+    {0x67, 6},  // g
+    {0x62, 7},  // b
+    {0x6E, 8},  // n
+    {0x6A, 9},  // j
+    {0x6D, 10}, // m
+    {0x6B, 11}, // k
+    {0x2C, 12}  // ,
 };
 
-void play_sound(const char* key) {
+void play_sound(int key) {
     
     // if a new note is captured, we set the correct frequency
-    if (key[0] != key_pressed) {
+    if (keyboard.find(key) != keyboard.end()) {
 
-        s.frequency = BASE_FREQUENCY * pow(SEMITONE_RATIO, keyboard.at(key[0]));
+        s.frequency = BASE_FREQUENCY * pow(SEMITONE_RATIO, keyboard.at(key));
         s.env.note_on(sound.GetTime());
-        key_pressed = key[0];
+        key_pressed = key;
 
     }
    
@@ -79,7 +79,7 @@ public:
 
         switch (event) {
         case FL_KEYDOWN:
-            play_sound(Fl::event_text());
+            play_sound(Fl::event_key());
             return 1;
         case FL_KEYUP:
             release_sound();
