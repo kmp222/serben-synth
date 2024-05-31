@@ -11,7 +11,8 @@ struct Osc {
         SQUARE = 1,
         TRIANGLE = 2,
         DIGITAL_SAW = 3,
-        NOISE = 4
+        NOISE = 4,
+        SERBEN_LASER = 5
 
     };
     

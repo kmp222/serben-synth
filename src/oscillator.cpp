@@ -51,13 +51,12 @@ double Osc::sound(double time, double frequency) {
             break;
 
         case NOISE:
-            output = frequency != 0 ? 2.0 * ((double) rand() / (double) RAND_MAX) * amp - 1.0 : 0;
+            output = frequency != 0 ? 2.0 * ((double) rand() / (double) RAND_MAX) - 1.0 : 0;
             break;
 
-        /* case LASER:
-            output = (amp * M_PI * fmod(time, 1.0 / amp)) * (2.0 / M_PI) - (M_PI / 2.0)
+        case SERBEN_LASER:
+            output = (amp * M_PI * fmod(time, 1.0 / amp)) * (2.0 / M_PI) - (M_PI / 2.0);
             break;
-        */
 
         default:
             output = 0.0;

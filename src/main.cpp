@@ -44,10 +44,12 @@ void play_sound(int key) {
     // if a new note is captured, we set the correct frequency
     if (keyboard.find(key) != keyboard.end()) {
 
-        s.frequency = BASE_FREQUENCY * pow(SEMITONE_RATIO, keyboard.at(key));
-        s.env.note_on(sound.GetTime());
-        key_pressed = key;
-
+        if (key != key_pressed) {
+            s.frequency = BASE_FREQUENCY * pow(SEMITONE_RATIO, keyboard.at(key));
+            s.env.note_on(sound.GetTime());
+            key_pressed = key;
+        }
+        
     }
    
     // if the note hasn't changed, we don't need to set the frequency again
@@ -215,7 +217,7 @@ int main() {
 
     // attack slider
     double* attack = &(s.env.attack_time);
-    Fl_Value_Slider* attack_slider = new Fl_Value_Slider(10, 10, 280, 25, "attack"); // x, y, width, length, name
+    Fl_Value_Slider* attack_slider = new Fl_Value_Slider(10, 10, 280, 25, "attack"); // x, y, width, height, name
     attack_slider->type(FL_HORIZONTAL);
     attack_slider->bounds(0, 10); // bounds
     attack_slider->step(0.01); // increment
@@ -270,7 +272,7 @@ int main() {
     // three lfo's are unnecessary so only one is exposed to the user
     // lfo hertz
     double* lfo_hertz = &(s.osc1.lfo_hertz);
-    Fl_Value_Slider* lfo_hertz_slider = new Fl_Value_Slider(510, 60, 100, 25, "lfo hertz");
+    Fl_Value_Slider* lfo_hertz_slider = new Fl_Value_Slider(510, 60, 280, 25, "lfo hertz");
     lfo_hertz_slider->type(FL_HORIZONTAL);
     lfo_hertz_slider->bounds(0, 20);
     lfo_hertz_slider->step(0.01);
@@ -279,7 +281,7 @@ int main() {
 
     // lfo amplitude
     double* lfo_amp = &(s.osc1.lfo_amplitude);
-    Fl_Value_Slider* lfo_amp_slider = new Fl_Value_Slider(510, 110, 100, 25, "lfo amplitude");
+    Fl_Value_Slider* lfo_amp_slider = new Fl_Value_Slider(510, 110, 280, 25, "lfo amplitude");
     lfo_amp_slider->type(FL_HORIZONTAL);
     lfo_amp_slider->bounds(0, 1);
     lfo_amp_slider->step(0.01);
@@ -349,6 +351,7 @@ int main() {
     // osc1_wave->add("analog saw");
     osc1_wave->add("saw");
     osc1_wave->add("noise");
+    osc1_wave->add("serben laser");
     osc1_wave->value(*wave);
     osc1_wave->callback(choice_callback, wave);
 
@@ -361,6 +364,7 @@ int main() {
     // osc2_wave->add("analog saw");
     osc2_wave->add("saw");
     osc2_wave->add("noise");
+    osc2_wave->add("serben laser");
     osc2_wave->value(*wave2);
     osc2_wave->callback(choice_callback, wave2);
 
@@ -373,6 +377,7 @@ int main() {
     // osc3_wave->add("analog saw");
     osc3_wave->add("saw");
     osc3_wave->add("noise");
+    osc3_wave->add("serben laser");
     osc3_wave->value(*wave3);
     osc3_wave->callback(choice_callback, wave3);
 
