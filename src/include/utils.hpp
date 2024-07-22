@@ -8,8 +8,8 @@
 double w(double hertz);
 
 // custom simple GUI
-void print_keyboard();
-void print_info();
+// void print_keyboard();
+// void print_info();
 
 // preset serialization
 std::string preset_to_json(Preset p);

@@ -63,7 +63,6 @@ void release_sound() {
 
         s.env.note_off(sound.GetTime());
         key_pressed = ' ';
-        s.frequency = 0.0;
 
     }
 
@@ -200,7 +199,7 @@ void counter_callback(Fl_Widget* widget, void* data) {
     
 } */
 
-// wop gui main
+// wip gui main
 int main() {
 
     // link synth sound to the sound machine

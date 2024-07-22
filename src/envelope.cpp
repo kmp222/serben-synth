@@ -4,7 +4,7 @@
 envelopeADSR::envelopeADSR()
     : attack_time(0.01),
       decay_time(0.01),
-      release_time(1.00),
+      release_time(1.0),
       start_amplitude(1.0),
       sustain_amplitude(1.0) {}
 
@@ -43,7 +43,8 @@ double envelopeADSR::get_amplitude(double time) {
 
     } else {
 
-        lifetime = trigger_off_time - time;
+        /*
+        lifetime = time - trigger_off_time;
 
         // release
         if (lifetime <= attack_time) {
@@ -61,15 +62,25 @@ double envelopeADSR::get_amplitude(double time) {
         amplitude = ((time - trigger_off_time) / release_time) *
             (0.0 - release_amplitude) + release_amplitude;
 
+        */
+
+        lifetime = time - trigger_off_time;
+
+        // release
+        if (lifetime <= release_time) {
+            amplitude = ((release_time - lifetime) / release_time) * sustain_amplitude;
+        }
+
     }
 
-    if (amplitude <= 0.1) {
+    if (amplitude <= 0.0001) {
         amplitude = 0.0;
     }
 
     return amplitude;
 
 }
+
 
 void envelopeADSR::note_on(double time_on) {
 
