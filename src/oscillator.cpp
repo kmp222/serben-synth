@@ -34,22 +34,27 @@ double Osc::sound(double time, double frequency) {
             output = asin( sin(amp) ) * (2.0 / M_PI);
             break;
         
-        /* case ANALOG_SAW:
-            {
-                double output = 0.0;
-                
-                for (double i = 1.0; i < 50.0; ++i) {
-                    output += ( sin(i * amp)) / i;
-                }
-
-                output = output * (2.0 / M_PI);
-            }
-            break; */
-        
-        case DIGITAL_SAW:
+        /*
+        // digital saw
+        case ANALOG_SAW:
             output = (frequency * M_PI * fmod(time, 1.0 / frequency)) * (2.0 / M_PI) - (M_PI / 2.0);
             break;
+        */
+        
+        // analog saw
+        case SAW:
+            
+            {
 
+                for (double i = 1.0; i < 50.0; ++i) {
+                    output += (sin(i * amp)) / i;
+                }
+
+                output *= (2.0 / M_PI);
+                break;
+                
+            }
+           
         case NOISE:
             output = frequency != 0 ? 2.0 * ((double) rand() / (double) RAND_MAX) - 1.0 : 0;
             break;

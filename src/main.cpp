@@ -14,6 +14,8 @@
 #include <FL/Fl_Value_Slider.H>
 #include <FL/Fl_Choice.H>
 #include <FL/Fl_Simple_Counter.H>
+#include <FL/Fl_Menu_Bar.H>
+#include <FL/Fl_File_Chooser.H>
 
 double BASE_FREQUENCY = 220.0; // sound tuning
 const double SEMITONE_RATIO = pow(2.0, 1.0 / 12.0); // sound tuning
@@ -71,8 +73,17 @@ void release_sound() {
 // override handle method
 class MyWindow : public Fl_Window {
 
+private:
+    Fl_Menu_Bar* menu_bar;
+
 public:
-    MyWindow(int w, int h, const char* title) : Fl_Window(w, h, title) {}
+    MyWindow(int w, int h, const char* title) : Fl_Window(w, h, title) {
+    
+        menu_bar = new Fl_Menu_Bar(0, 0, w+10, 30);
+        menu_bar->add("Import Preset", FL_CTRL + 'o', cb_load_json, this);
+        menu_bar->add("Save Preset", FL_CTRL + 's', cb_save_json, this);
+    
+    }
 
     int handle(int event) override {
 
@@ -96,6 +107,20 @@ public:
     void close() {
         sound.Stop(); 
         Fl_Window::hide();
+    }
+
+    static void cb_load_json(Fl_Widget*, void* v) {
+        MyWindow* win = (MyWindow*)v;
+        Fl_File_Chooser chooser(".", "*.json", Fl_File_Chooser::SINGLE, "Import Preset");
+        chooser.show();
+  
+    }
+
+    static void cb_save_json(Fl_Widget*, void* v) {
+        MyWindow* win = (MyWindow*)v;
+        Fl_File_Chooser chooser(".", "*.json", Fl_File_Chooser::CREATE, "Save Preset");
+        chooser.show();
+       
     }
 
 };
@@ -207,16 +232,17 @@ int main() {
 
     // gui setup
     MyWindow window(800, 600, "Serben Synth");
-    Fl_Box b(700, 500, 0, 0);
+    Fl_Box b(680, 475, 0, 0);
+    // Fl_Box b(650, 580, 0, 0);
     Fl_Image* image = new Fl_PNG_Image("src/resources/images/serben.png");
-    Fl_Image* scaled_image = image->copy(100, 100);
+    Fl_Image* scaled_image = image->copy(140, 140);
     delete image;
     image = nullptr;
     b.image(scaled_image);
 
     // attack slider
     double* attack = &(s.env.attack_time);
-    Fl_Value_Slider* attack_slider = new Fl_Value_Slider(10, 10, 280, 25, "attack"); // x, y, width, height, name
+    Fl_Value_Slider* attack_slider = new Fl_Value_Slider(10, 50, 280, 25, "attack"); // x, y, width, height, name
     attack_slider->type(FL_HORIZONTAL);
     attack_slider->bounds(0, 10); // bounds
     attack_slider->step(0.01); // increment
@@ -225,7 +251,7 @@ int main() {
 
     // decay slider
     double* decay = &(s.env.decay_time);
-    Fl_Value_Slider* decay_slider = new Fl_Value_Slider(10, 60, 280, 25, "decay");
+    Fl_Value_Slider* decay_slider = new Fl_Value_Slider(10, 100, 280, 25, "decay");
     decay_slider->type(FL_HORIZONTAL);
     decay_slider->bounds(0, 10);
     decay_slider->step(0.01);
@@ -234,7 +260,7 @@ int main() {
 
     // sustain slider
     double* sustain = &(s.env.sustain_amplitude);
-    Fl_Value_Slider* sustain_slider = new Fl_Value_Slider(10, 110, 280, 25, "sustain volume");
+    Fl_Value_Slider* sustain_slider = new Fl_Value_Slider(10, 150, 280, 25, "sustain volume");
     sustain_slider->type(FL_HORIZONTAL);
     sustain_slider->bounds(0, 1);
     sustain_slider->step(0.01);
@@ -243,7 +269,7 @@ int main() {
 
     // release slider
     double* release = &(s.env.release_time);
-    Fl_Value_Slider* release_slider = new Fl_Value_Slider(10, 160, 280, 25, "release");
+    Fl_Value_Slider* release_slider = new Fl_Value_Slider(10, 200, 280, 25, "release");
     release_slider->type(FL_HORIZONTAL);
     release_slider->bounds(0, 10);
     release_slider->step(0.01);
@@ -252,7 +278,7 @@ int main() {
 
     // volume post attack
     double* start_volume = &(s.env.start_amplitude);
-    Fl_Value_Slider* start_volume_slider = new Fl_Value_Slider(10, 210, 280, 25, "start volume");
+    Fl_Value_Slider* start_volume_slider = new Fl_Value_Slider(10, 250, 280, 25, "start volume");
     start_volume_slider->type(FL_HORIZONTAL);
     start_volume_slider->bounds(0, 1);
     start_volume_slider->step(0.01);
@@ -261,7 +287,7 @@ int main() {
 
     // master volume
     double* master_volume = &(s.master_volume);
-    Fl_Value_Slider* master_volume_slider = new Fl_Value_Slider(510, 10, 280, 25, "master volume");
+    Fl_Value_Slider* master_volume_slider = new Fl_Value_Slider(510, 50, 280, 25, "master volume");
     master_volume_slider->type(FL_HORIZONTAL);
     master_volume_slider->bounds(0, 1);
     master_volume_slider->step(0.01);
@@ -271,7 +297,7 @@ int main() {
     // three lfo's are unnecessary so only one is exposed to the user
     // lfo hertz
     double* lfo_hertz = &(s.osc1.lfo_hertz);
-    Fl_Value_Slider* lfo_hertz_slider = new Fl_Value_Slider(510, 60, 280, 25, "lfo hertz");
+    Fl_Value_Slider* lfo_hertz_slider = new Fl_Value_Slider(510, 100, 280, 25, "lfo hertz");
     lfo_hertz_slider->type(FL_HORIZONTAL);
     lfo_hertz_slider->bounds(0, 20);
     lfo_hertz_slider->step(0.01);
@@ -280,7 +306,7 @@ int main() {
 
     // lfo amplitude
     double* lfo_amp = &(s.osc1.lfo_amplitude);
-    Fl_Value_Slider* lfo_amp_slider = new Fl_Value_Slider(510, 110, 280, 25, "lfo amplitude");
+    Fl_Value_Slider* lfo_amp_slider = new Fl_Value_Slider(510, 150, 280, 25, "lfo amplitude");
     lfo_amp_slider->type(FL_HORIZONTAL);
     lfo_amp_slider->bounds(0, 1);
     lfo_amp_slider->step(0.01);
@@ -289,7 +315,7 @@ int main() {
 
     // osc1 transpose
     double* osc1_transpose = &(s.osc1.transpose);
-    Fl_Simple_Counter* osc1_transpose_counter = new Fl_Simple_Counter(600, 260, 50, 25, "osc1 transpose");
+    Fl_Simple_Counter* osc1_transpose_counter = new Fl_Simple_Counter(450, 410, 50, 25, "osc1 transpose");
     osc1_transpose_counter->type(FL_HORIZONTAL);
     osc1_transpose_counter->bounds(-24, 24);
     osc1_transpose_counter->step(1);
@@ -298,7 +324,7 @@ int main() {
 
     // osc2 transpose
     double* osc2_transpose = &(s.osc2.transpose);
-    Fl_Simple_Counter* osc2_transpose_counter = new Fl_Simple_Counter(600, 310, 50, 25, "osc2 transpose");
+    Fl_Simple_Counter* osc2_transpose_counter = new Fl_Simple_Counter(450, 460, 50, 25, "osc2 transpose");
     osc2_transpose_counter->type(FL_HORIZONTAL);
     osc2_transpose_counter->bounds(-24, 24);
     osc2_transpose_counter->step(1);
@@ -307,7 +333,7 @@ int main() {
 
     // osc3 transpose
     double* osc3_transpose = &(s.osc3.transpose);
-    Fl_Simple_Counter* osc3_transpose_counter = new Fl_Simple_Counter(600, 360, 50, 25, "osc3 transpose");
+    Fl_Simple_Counter* osc3_transpose_counter = new Fl_Simple_Counter(450, 510, 50, 25, "osc3 transpose");
     osc3_transpose_counter->type(FL_HORIZONTAL);
     osc3_transpose_counter->bounds(-24, 24);
     osc3_transpose_counter->step(1);
@@ -316,7 +342,7 @@ int main() {
 
     // osc1 volume
     double* osc1_volume = &(s.osc1.volume);
-    Fl_Value_Slider* osc1_volume_slider = new Fl_Value_Slider(400, 260, 100, 25, "osc1 volume");
+    Fl_Value_Slider* osc1_volume_slider = new Fl_Value_Slider(300, 410, 100, 25, "osc1 volume");
     osc1_volume_slider->type(FL_HORIZONTAL);
     osc1_volume_slider->bounds(0, 1);
     osc1_volume_slider->step(0.01);
@@ -325,7 +351,7 @@ int main() {
 
     // osc2 volume
     double* osc2_volume = &(s.osc2.volume);
-    Fl_Value_Slider* osc2_volume_slider = new Fl_Value_Slider(400, 310, 100, 25, "osc2 volume");
+    Fl_Value_Slider* osc2_volume_slider = new Fl_Value_Slider(300, 460, 100, 25, "osc2 volume");
     osc2_volume_slider->type(FL_HORIZONTAL);
     osc2_volume_slider->bounds(0, 1);
     osc2_volume_slider->step(0.01);
@@ -334,7 +360,7 @@ int main() {
 
     // osc3 volume
     double* osc3_volume = &(s.osc3.volume);
-    Fl_Value_Slider* osc3_volume_slider = new Fl_Value_Slider(400, 360, 100, 25, "osc3 volume");
+    Fl_Value_Slider* osc3_volume_slider = new Fl_Value_Slider(300, 510, 100, 25, "osc3 volume");
     osc3_volume_slider->type(FL_HORIZONTAL);
     osc3_volume_slider->bounds(0, 1);
     osc3_volume_slider->step(0.01);
@@ -342,7 +368,7 @@ int main() {
     osc3_volume_slider->callback(slider_callback<double>, osc3_volume);
     
     // osc1 wave
-    Fl_Choice* osc1_wave = new Fl_Choice(60, 260, 280, 25, "osc 1");
+    Fl_Choice* osc1_wave = new Fl_Choice(40, 410, 250, 25, "osc1");
     Osc::Waves* wave = &(s.osc1.wave);
     osc1_wave->add("sine");
     osc1_wave->add("square");
@@ -355,7 +381,7 @@ int main() {
     osc1_wave->callback(choice_callback, wave);
 
     // osc2 wave
-    Fl_Choice* osc2_wave = new Fl_Choice(60, 310, 280, 25, "osc 2");
+    Fl_Choice* osc2_wave = new Fl_Choice(40, 460, 250, 25, "osc2");
     Osc::Waves* wave2 = &(s.osc2.wave);
     osc2_wave->add("sine");
     osc2_wave->add("square");
@@ -368,7 +394,7 @@ int main() {
     osc2_wave->callback(choice_callback, wave2);
 
     // osc3 wave
-    Fl_Choice* osc3_wave = new Fl_Choice(60, 360, 280, 25, "osc 3");
+    Fl_Choice* osc3_wave = new Fl_Choice(40, 510, 250, 25, "osc3");
     Osc::Waves* wave3 = &(s.osc3.wave);
     osc3_wave->add("sine");
     osc3_wave->add("square");

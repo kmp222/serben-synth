@@ -1,6 +1,11 @@
 # serben synth
 
-c++ sound synthesizer using keyboard input . . . wip
+c++ sound synthesizer using keyboard input
+
+Missing funcs:
+- import preset
+- save preset
+- view presets list
 
 ## libraries
 

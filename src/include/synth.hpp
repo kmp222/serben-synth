@@ -9,7 +9,7 @@
 
 struct Synth {
 
-    double master_volume = 0.7;
+    double master_volume = 0.5;
     double frequency = 0.0;
 
     // master envelope

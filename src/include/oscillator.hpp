@@ -10,7 +10,7 @@ struct Osc {
         SINE = 0,
         SQUARE = 1,
         TRIANGLE = 2,
-        DIGITAL_SAW = 3,
+        SAW = 3,
         NOISE = 4,
         SERBEN_LASER = 5
 

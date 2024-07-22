@@ -19,7 +19,7 @@ double envelopeADSR::get_amplitude(double time) {
 
     double amplitude = 0.0;
     double lifetime = 0.0;
-    double release_amplitude = 0.0;
+    // double release_amplitude = 0.0;
 
     if (note_is_on) {
         
@@ -40,6 +40,8 @@ double envelopeADSR::get_amplitude(double time) {
         if (lifetime > (attack_time + decay_time)) {
             amplitude = sustain_amplitude;
         }
+
+        // release_amplitude = amplitude;
 
     } else {
 
